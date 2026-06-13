@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blessed Connection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #0f1a14;
+      --forest:    #1a3d2b;
+      --moss:      #2d6a4f;
+      --leaf:      #52b788;
+      --sun:       #f4a261;
+      --cream:     #faf8f3;
+      --pale:      #f0ede6;
+      --mist:      #e8f5ef;
+      --white:     #ffffff;
+      --text-sub:  #5a6b62;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(15,26,20,0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--leaf); letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75); text-decoration: none;
+      font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--leaf); }
+    .nav-lang {
+      display: flex; gap: 8px;
+    }
+    .lang-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.6); font-size: 0.75rem;
+      padding: 4px 10px; border-radius: 20px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn.active, .lang-btn:hover {
+      border-color: var(--leaf); color: var(--leaf);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--forest);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 120px 48px 80px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(82,183,136,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(244,162,97,0.08) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image: linear-gradient(var(--leaf) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--leaf) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content { position: relative; max-width: 700px; }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--leaf);
+      border: 1px solid rgba(82,183,136,0.4);
+      padding: 6px 16px; border-radius: 20px; margin-bottom: 32px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900; line-height: 1.08;
+      color: var(--white); margin-bottom: 12px;
+    }
+    .hero-title em {
+      font-style: normal; color: var(--leaf);
+    }
+    .hero-sub {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 1.1rem; font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 48px; max-width: 500px; line-height: 1.8;
+    }
+    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--leaf); color: var(--ink);
+      padding: 16px 32px; border-radius: 4px;
+      font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: all 0.2s; border: none; cursor: pointer;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #6fcfa0; transform: translateY(-1px); }
+    .btn-outline {
+      border: 1.5px solid rgba(255,255,255,0.35); color: var(--white);
+      padding: 16px 32px; border-radius: 4px;
+      font-weight: 500; font-size: 0.9rem;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: all 0.2s; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--leaf); color: var(--leaf); }
+    .hero-stat {
+      position: absolute; bottom: 48px; right: 48px;
+      display: flex; gap: 48px;
+    }
+    .stat-item { text-align: right; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: var(--leaf);
+    }
+    .stat-label {
+      font-size: 0.75rem; color: rgba(255,255,255,0.45);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how {
+      background: var(--white);
+      padding: 100px 48px;
+    }
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--moss);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700; line-height: 1.2;
+      color: var(--ink); margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem; color: var(--text-sub);
+      max-width: 520px; line-height: 1.8;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .how-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; margin-top: 64px;
+    }
+    .how-side-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--leaf);
+      padding: 6px 14px; background: var(--mist);
+      border-radius: 3px; display: inline-block; margin-bottom: 28px;
+    }
+    .how-steps { display: flex; flex-direction: column; gap: 24px; }
+    .how-step {
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--forest); color: var(--leaf);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
+      font-family: 'Playfair Display', serif;
+    }
+    .step-text strong {
+      display: block; font-size: 0.95rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 4px;
+    }
+    .step-text span {
+      font-size: 0.85rem; color: var(--text-sub);
+      font-family: 'Noto Sans JP', sans-serif; line-height: 1.7;
+    }
+
+    /* ── REQUEST BOARD ── */
+    #requests {
+      background: var(--pale);
+      padding: 100px 48px;
+    }
+    .filter-bar {
+      display: flex; gap: 10px; flex-wrap: wrap; margin: 32px 0 40px;
+    }
+    .filter-btn {
+      padding: 8px 18px; border-radius: 20px;
+      border: 1.5px solid rgba(45,106,79,0.25);
+      background: none; color: var(--moss);
+      font-size: 0.8rem; font-weight: 500; cursor: pointer;
+      transition: all 0.2s; font-family: 'Noto Sans JP', sans-serif;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--forest); color: var(--white);
+      border-color: var(--forest);
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--white); border-radius: 8px;
+      padding: 28px; border: 1px solid rgba(0,0,0,0.06);
+      transition: all 0.25s; position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--leaf);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+    .card:hover::before { transform: scaleX(1); }
+    .card-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tag {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+      padding: 3px 10px; border-radius: 3px; text-transform: uppercase;
+    }
+    .tag-urgent { background: #fff0e6; color: #c05621; }
+    .tag-cat { background: var(--mist); color: var(--moss); }
+    .tag-online { background: #e8f0fe; color: #3b5bdb; }
+    .card-org { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 8px; }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 10px; line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 0.85rem; color: var(--text-sub);
+      line-height: 1.7; margin-bottom: 20px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .card-meta {
+      display: flex; gap: 16px; font-size: 0.78rem;
+      color: var(--text-sub); margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .card-meta span::before { content: '• '; color: var(--leaf); }
+    .card-apply {
+      width: 100%;
+      padding: 11px; border-radius: 4px;
+      background: var(--forest); color: var(--white);
+      border: none; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+      font-family: 'Noto Sans JP', sans-serif;
+      text-decoration: none; display: block; text-align: center;
+    }
+    .card-apply:hover { background: var(--moss); }
+
+    /* ── DONATION ── */
+    #donate {
+      background: var(--forest);
+      padding: 100px 48px;
+    }
+    #donate .section-title { color: var(--white); }
+    #donate .section-sub { color: rgba(255,255,255,0.55); }
+    .donate-note {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: rgba(82,183,136,0.12); border: 1px solid rgba(82,183,136,0.25);
+      border-radius: 6px; padding: 16px 20px;
+      margin: 32px 0 48px; max-width: 600px;
+    }
+    .donate-note-icon { font-size: 1.2rem; }
+    .donate-note p {
+      font-size: 0.85rem; color: rgba(255,255,255,0.7);
+      line-height: 1.7; font-family: 'Noto Sans JP', sans-serif;
+    }
+    .donate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .donate-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 24px;
+      transition: all 0.2s;
+    }
+    .donate-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(82,183,136,0.4);
+    }
+    .donate-card-icon { font-size: 2rem; margin-bottom: 12px; }
+    .donate-card-name {
+      font-weight: 700; color: var(--white);
+      font-size: 1rem; margin-bottom: 6px;
+    }
+    .donate-card-desc {
+      font-size: 0.8rem; color: rgba(255,255,255,0.5);
+      line-height: 1.6; margin-bottom: 18px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .btn-donate {
+      display: block; text-align: center;
+      padding: 10px; border-radius: 4px;
+      border: 1.5px solid rgba(82,183,136,0.5);
+      color: var(--leaf); font-size: 0.82rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-donate:hover { background: var(--leaf); color: var(--ink); }
+
+    /* ── STORIES ── */
+    #stories {
+      background: var(--white); padding: 100px 48px;
+    }
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px; margin-top: 48px;
+    }
+    .story-card {
+      border: 1px solid rgba(0,0,0,0.07); border-radius: 8px; padding: 28px;
+    }
+    .story-stars { color: var(--sun); font-size: 0.9rem; margin-bottom: 12px; }
+    .story-quote {
+      font-size: 0.9rem; color: var(--text-sub); line-height: 1.8;
+      margin-bottom: 20px; font-family: 'Noto Sans JP', sans-serif;
+      font-style: italic;
+    }
+    .story-author { display: flex; align-items: center; gap: 12px; }
+    .story-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--mist); display: flex; align-items: center;
+      justify-content: center; font-size: 1.1rem;
+    }
+    .story-name { font-weight: 600; font-size: 0.88rem; color: var(--ink); }
+    .story-meta { font-size: 0.75rem; color: var(--text-sub); }
+
+    /* ── FAQ ── */
+    #faq {
+      background: var(--pale); padding: 100px 48px;
+    }
+    .faq-wrap { max-width: 720px; margin: 48px auto 0; }
+    .faq-item {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      padding: 20px 0; display: flex; justify-content: space-between;
+      align-items: center; cursor: pointer;
+      font-size: 0.95rem; font-weight: 600; color: var(--ink);
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .faq-q .faq-icon {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--mist); color: var(--moss);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0; transition: transform 0.2s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      display: none; padding: 0 0 20px;
+      font-size: 0.88rem; color: var(--text-sub); line-height: 1.8;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── FORMS ── */
+    #connect {
+      background: var(--white); padding: 100px 48px;
+    }
+    .form-tabs {
+      display: flex; gap: 0; margin: 40px 0 0;
+      border-bottom: 2px solid var(--pale);
+    }
+    .form-tab {
+      padding: 14px 28px; background: none; border: none;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      color: var(--text-sub); position: relative;
+      font-family: 'Noto Sans JP', sans-serif;
+      transition: color 0.2s;
+    }
+    .form-tab.active { color: var(--forest); }
+    .form-tab.active::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 2px; background: var(--leaf);
+    }
+    .form-panel { display: none; padding: 40px 0; max-width: 560px; }
+    .form-panel.active { display: block; }
+    .form-row { margin-bottom: 20px; }
+    .form-row label {
+      display: block; font-size: 0.8rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 6px; letter-spacing: 0.03em;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .form-row input, .form-row select, .form-row textarea {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid rgba(0,0,0,0.12); border-radius: 4px;
+      font-size: 0.9rem; font-family: 'Noto Sans JP', sans-serif;
+      background: var(--cream); color: var(--ink);
+      transition: border-color 0.2s; outline: none;
+    }
+    .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+      border-color: var(--leaf);
+    }
+    .form-row textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      background: var(--forest); color: var(--white);
+      padding: 14px 36px; border: none; border-radius: 4px;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      transition: background 0.2s; font-family: 'Noto Sans JP', sans-serif;
+    }
+    .form-submit:hover { background: var(--moss); }
+
+    /* ── COMMUNITY ── */
+    #community {
+      background: var(--mist); padding: 80px 48px; text-align: center;
+    }
+    .community-inner { max-width: 560px; margin: 0 auto; }
+    .discord-box {
+      background: #5865f2; border-radius: 12px; padding: 36px;
+      margin-top: 36px;
+    }
+    .discord-box h3 {
+      color: var(--white); font-size: 1.2rem;
+      font-weight: 700; margin-bottom: 8px;
+    }
+    .discord-box p {
+      color: rgba(255,255,255,0.75); font-size: 0.88rem;
+      margin-bottom: 24px; font-family: 'Noto Sans JP', sans-serif;
+      line-height: 1.7;
+    }
+    .btn-discord {
+      display: inline-block; background: var(--white);
+      color: #5865f2; padding: 12px 28px; border-radius: 4px;
+      font-weight: 700; font-size: 0.88rem; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-discord:hover { opacity: 0.9; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); color: rgba(255,255,255,0.4);
+      padding: 48px; text-align: center;
+      font-size: 0.8rem; line-height: 1.8;
+    }
+    footer strong { color: var(--leaf); font-family: 'Playfair Display', serif; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+      background: var(--forest); color: var(--white);
+      padding: 14px 28px; border-radius: 4px;
+      font-size: 0.88rem; font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+      z-index: 999;
+    }
+    .toast.show { opacity: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      #hero { padding: 100px 20px 120px; }
+      .hero-stat { position: static; margin-top: 48px; flex-direction: row; gap: 32px; }
+      .stat-item { text-align: left; }
+      #how, #requests, #donate, #stories, #faq, #connect, #community { padding: 72px 20px; }
+      .how-grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Blessed Connection</div>
+  <ul class="nav-links">
+    <li><a href="#how">仕組み</a></li>
+    <li><a href="#requests">リクエスト</a></li>
+    <li><a href="#donate">寄付</a></li>
+    <li><a href="#stories">体験談</a></li>
+    <li><a href="#connect">参加する</a></li>
+  </ul>
+  <div class="nav-lang">
+    <button class="lang-btn active">JP</button>
+    <button class="lang-btn">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">International Volunteer Platform</div>
+    <h1 class="hero-title">
+      誰かの人生を<br><em>変える場所</em>
+    </h1>
+    <p class="hero-sub">
+      ボランティアを求める団体と、助けたい人をつなぐ。<br>
+      あなたの行動が、地球の反対側で誰かの明日を変える。
+    </p>
+    <div class="hero-cta">
+      <a href="#requests" class="btn-primary">ボランティアを探す</a>
+      <a href="#connect" class="btn-outline">支援をリクエストする</a>
+    </div>
+  </div>
+  <div class="hero-stat">
+    <div class="stat-item">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">対応国・地域</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">48h</div>
+      <div class="stat-label">返答目安時間</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-eyebrow">How it works</div>
+  <h2 class="section-title">2つの使い方があります</h2>
+  <p class="section-sub">ボランティアとして参加したい方も、支援を必要とする団体も、ここから始めてください。</p>
+  <div class="how-grid">
+    <div>
+      <div class="how-side-label">🌿 ボランティアの方</div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>プロフィールを登録する</strong>
+            <span>スキル・言語・活動希望カテゴリを入力するだけで完了します。</span>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>リクエストを探して応募する</strong>
+            <span>国・カテゴリ・期間でフィルタリングして、自分に合った活動を見つけてください。</span>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>団体とオンラインで繋がる</strong>
+            <span>応募後48時間以内に担当者からご連絡します。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="how-side-label">🤝 支援を必要とする団体の方</div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>団体情報を登録する</strong>
+            <span>活動国・団体名・必要なサポートの種類を入力してください。</span>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>支援リクエストを投稿する</strong>
+            <span>何人のボランティアがいつ必要か、どんなスキルが求められるかを明記してください。</span>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>応募を受け取る</strong>
+            <span>ボランティアからの応募が届き次第、担当者が確認してご連絡します。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REQUEST BOARD -->
+<section id="requests">
+  <div class="section-eyebrow">Support Requests</div>
+  <h2 class="section-title">現在の支援リクエスト</h2>
+  <p class="section-sub">世界各地の団体から届いているリクエストです。あなたのスキルを必要としている場所があります。</p>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards('all', this)">すべて</button>
+    <button class="filter-btn" onclick="filterCards('教育', this)">教育支援</button>
+    <button class="filter-btn" onclick="filterCards('医療', this)">医療</button>
+    <button class="filter-btn" onclick="filterCards('災害', this)">災害復旧</button>
+    <button class="filter-btn" onclick="filterCards('環境', this)">環境</button>
+    <button class="filter-btn" onclick="filterCards('子ども', this)">子ども支援</button>
+    <button class="filter-btn" onclick="filterCards('online', this)">オンライン可</button>
+  </div>
+  <div class="cards-grid" id="cardsGrid">
+
+    <div class="card" data-cat="教育" data-online="false">
+      <div class="card-tags">
+        <span class="tag tag-urgent">緊急</span>
+        <span class="tag tag-cat">教育支援</span>
+      </div>
+      <div class="card-org">🇵🇭 フィリピン・セブ島 / Smile Learning Center</div>
+      <div class="card-title">小学校での算数・英語の授業補助</div>
+      <div class="card-desc">農村部の小学校で週3回、算数と英語の授業をサポートしてくれるボランティアを募集しています。</div>
+      <div class="card-meta">
+        <span>2〜4週間</span>
+        <span>3名募集</span>
+        <span>英語基礎レベル可</span>
+      </div>
+      <a href="https://tally.so" target="_blank" class="card-apply">応募する / Apply</a>
+    </div>
+
+    <div class="card" data-cat="子ども" data-online="true">
+      <div class="card-tags">
+        <span class="tag tag-cat">子ども支援</span>
+        <span class="tag tag-online">オンライン可</span>
+      </div>
+      <div class="card-org">🇮🇩 インドネシア・ジャカルタ / Rumah Harapan</div>
+      <div class="card-title">孤児院の子どもたちへのオンライン日本語レッスン</div>
+      <div class="card-desc">週1〜2回、30〜60分のオンラインレッスンを通じて子どもたちに日本語・日本文化を教えてください。</div>
+      <div class="card-meta">
+        <span>継続的</span>
+        <span>5名募集</span>
+        <span>オンライン</span>
+      </div>
+      <a href="https://tally.so" target="_blank" class="card-apply">応募する / Apply</a>
+    </div>
+
+    <div class="card" data-cat="医療" data-online="false">
+      <div class="card-tags">
+        <span class="tag tag-urgent">緊急</span>
+        <span class="tag tag-cat">医療</span>
+      </div>
+      <div class="card-org">🇲🇲 ミャンマー / Health Bridge Myanmar</div>
+      <div class="card-title">農村部クリニックでの医療通訳・事務補助</div>
+      <div class="card-desc">現地スタッフと協力して患者の受付・記録管理・簡易通訳をサポートするボランティアを求めています。</div>
+      <div class="card-meta">
+        <span>1ヶ月以上</span>
+        <span>2名募集</span>
+        <span>経験者優遇</span>
+      </div>
+      <a href="https://tally.so" target="_blank" class="card-apply">応募する / Apply</a>
+    </div>
+
+    <div class="card" data-cat="環境" data-online="false">
+      <div class="card-tags">
+        <span class="tag tag-cat">環境</span>
+      </div>
+      <div class="card-org">🇻🇳 ベトナム・ハノイ / Green Future VN</div>
+      <div class="card-title">マングローブ植林プロジェクトの参加者募集</div>
+      <div class="card-desc">海岸沿いのマングローブ林復元プロジェクトに参加するボランティアを募集しています。初心者歓迎。</div>
+      <div class="card-meta">
+        <span>1週間</span>
+        <span>10名募集</span>
+        <span>初心者OK</span>
+      </div>
+      <a href="https://tally.so" target="_blank" class="card-apply">応募する / Apply</a>
+    </div>
+
+    <div class="card" data-cat="災害" data-online="false">
+      <div class="card-tags">
+        <span class="tag tag-urgent">緊急</span>
+        <span class="tag tag-cat">災害復旧</span>
+      </div>
+      <div class="card-org">🇯🇵 日本・石川県 / 能登復興サポート隊</div>
+      <div class="card-title">被災地での家屋片付け・物資配布補助</div>
+      <div class="card-desc">能登半島地震の被災地で家屋の片付けや炊き出し・物資配布のサポートをしてくれる方を求めています。</div>
+      <div class="card-meta">
+        <span>1〜3日</span>
+        <span>随時募集</span>
+        <span>国内・日帰り可</span>
+      </div>
+      <a href="https://tally.so" target="_blank" class="card-apply">応募する / Apply</a>
+    </div>
+
+    <div class="card" data-cat="教育" data-online="true">
+      <div class="card-tags">
+        <span class="tag tag-cat">教育支援</span>
+        <span class="tag tag-online">オンライン可</span>
+      </div>
+      <div class="card-org">🇰🇭 カンボジア / Learn Together NGO</div>
+      <div class="card-title">ITスキル（Excel・Canva）の基礎を教える講師</div>
+      <div class="card-desc">就職支援施設の若者にExcelやCanvaの基礎を教えてくれる方を募集。オンライン対応可。</div>
+      <div class="card-meta">
+        <span>継続的</span>
+        <span>3名募集</span>
+        <span>オンライン</span>
+      </div>
+      <a href="https://tally.so" target="_blank" class="card-apply">応募する / Apply</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- DONATE -->
+<section id="donate">
+  <div class="section-eyebrow" style="color:var(--leaf)">Donation Support</div>
+  <h2 class="section-title">寄付で支援する</h2>
+  <p class="section-sub">Blessed Connectionは寄付金を直接受け取りません。信頼できる認定団体へ安全に繋ぎます。</p>
+  <div class="donate-note">
+    <div class="donate-note-icon">🔒</div>
+    <p>このサイトは寄付の仲介を行いません。下記の各団体の公式ページに直接アクセスして、安全に寄付が行えます。We do not collect donations. All links go directly to certified organizations.</p>
+  </div>
+  <div class="donate-grid">
+    <div class="donate-card">
+      <div class="donate-card-icon">🦄</div>
+      <div class="donate-card-name">UNICEF</div>
+      <div class="donate-card-desc">世界中の子どもたちの命と権利を守る国連機関。教育・医療・栄養支援を展開。</div>
+      <a href="https://www.unicef.or.jp/donate/" target="_blank" class="btn-donate">寄付ページへ →</a>
+    </div>
+    <div class="donate-card">
+      <div class="donate-card-icon">🏕️</div>
+      <div class="donate-card-name">UNHCR</div>
+      <div class="donate-card-desc">難民・国内避難民の保護と支援を行う国連難民高等弁務官事務所。</div>
+      <a href="https://www.unhcr.org/jp/donate" target="_blank" class="btn-donate">寄付ページへ →</a>
+    </div>
+    <div class="donate-card">
+      <div class="donate-card-icon">🩺</div>
+      <div class="donate-card-name">国境なき医師団</div>
+      <div class="donate-card-desc">紛争・災害地域で医療を提供する国際的な人道支援組織（MSF）。</div>
+      <a href="https://www.msf.or.jp/donate/" target="_blank" class="btn-donate">寄付ページへ →</a>
+    </div>
+    <div class="donate-card">
+      <div class="donate-card-icon">🌏</div>
+      <div class="donate-card-name">ピースウィンズ・ジャパン</div>
+      <div class="donate-card-desc">国内外の災害・紛争支援を行う日本発のNGO。</div>
+      <a href="https://peace-winds.org/support" target="_blank" class="btn-donate">寄付ページへ →</a>
+    </div>
+    <div class="donate-card">
+      <div class="donate-card-icon">🤲</div>
+      <div class="donate-card-name">JEN</div>
+      <div class="donate-card-desc">日本緊急援助活動。難民・被災者への緊急支援と自立復興を支援。</div>
+      <a href="https://www.jen-npo.org/donate/" target="_blank" class="btn-donate">寄付ページへ →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories">
+  <div class="section-eyebrow">Volunteer Stories</div>
+  <h2 class="section-title">参加者の声</h2>
+  <p class="section-sub">実際にボランティアに参加した方々からのコメントです。</p>
+  <div class="stories-grid">
+    <div class="story-card">
+      <div class="story-stars">★★★★★</div>
+      <p class="story-quote">「フィリピンの子どもたちと過ごした3週間は、人生で一番濃い時間でした。言葉が通じなくても、笑顔は世界共通だと感じました。」</p>
+      <div class="story-author">
+        <div class="story-avatar">🌸</div>
+        <div>
+          <div class="story-name">田中 さくら</div>
+          <div class="story-meta">フィリピン・教育支援 / 3週間</div>
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-stars">★★★★★</div>
+      <p class="story-quote">「オンラインでカンボジアの若者にExcelを教えました。最初は不安でしたが、担当者が丁寧にサポートしてくれて安心して参加できました。」</p>
+      <div class="story-author">
+        <div class="story-avatar">🌿</div>
+        <div>
+          <div class="story-name">山本 健太</div>
+          <div class="story-meta">カンボジア・ITスキル支援 / オンライン</div>
+        </div>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-stars">★★★★☆</div>
+      <p class="story-quote">「能登のボランティアに参加しました。少しでも力になれた気がして、自分自身も多くのことを学べた経験でした。次は海外にも挑戦したいです。」</p>
+      <div class="story-author">
+        <div class="story-avatar">⛰️</div>
+        <div>
+          <div class="story-name">佐藤 美咲</div>
+          <div class="story-meta">日本・災害復旧 / 2日間</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-eyebrow">FAQ</div>
+  <h2 class="section-title">よくある質問</h2>
+  <div class="faq-wrap">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ボランティアは無料で参加できますか？
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Blessed Connectionへの登録・マッチングは完全無料です。ただし、現地までの交通費・滞在費・保険料は参加者ご自身のご負担となります。オンラインボランティアは費用がほとんどかかりません。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        英語が話せなくても海外ボランティアに参加できますか？
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">各リクエストカードに必要な言語スキルを記載しています。「英語基礎レベル可」と記載されている活動も多くあります。まずは応募フォームでご相談ください。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        寄付はどこに届きますか？安全ですか？
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">このサイトは寄付金を直接受け取りません。UNICEF・UNHCR・国境なき医師団など、信頼できる認定団体の公式ページへ直接リンクしています。すべての寄付は各団体が管理します。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        学生・未経験でも参加できますか？
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">はい、多くの活動が「初心者OK」です。リクエストカードに「初心者OK」タグがついている活動を選んでください。学生の方の参加も大歓迎です。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        団体としてリクエストを投稿するにはどうすればいいですか？
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">ページ下部の「参加する」セクションから「支援リクエストを送る」タブを選択し、フォームに必要事項を入力してください。確認後、48時間以内にご連絡します。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        海外ボランティアに必要な保険はありますか？
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">海外旅行保険への加入を強くおすすめします。各活動のコーディネーターがおすすめの保険プランをご案内することも可能です。応募後にご相談ください。</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONNECT FORMS -->
+<section id="connect">
+  <div class="section-eyebrow">Get Connected</div>
+  <h2 class="section-title">参加する・リクエストを送る</h2>
+  <p class="section-sub">ボランティアとして登録する方も、支援を必要とする団体の方も、こちらからご連絡ください。</p>
+
+  <div class="form-tabs">
+    <button class="form-tab active" onclick="switchTab('volunteer', this)">🌿 ボランティアとして登録</button>
+    <button class="form-tab" onclick="switchTab('org', this)">🤝 支援リクエストを送る</button>
+  </div>
+
+  <div class="form-panel active" id="panel-volunteer">
+    <div class="form-row">
+      <label>お名前 / Name</label>
+      <input type="text" placeholder="田中 さくら / Sakura Tanaka" />
+    </div>
+    <div class="form-row">
+      <label>メールアドレス / Email</label>
+      <input type="email" placeholder="example@email.com" />
+    </div>
+    <div class="form-row">
+      <label>国籍 / Country</label>
+      <input type="text" placeholder="日本 / Japan" />
+    </div>
+    <div class="form-row">
+      <label>希望する活動カテゴリ</label>
+      <select>
+        <option value="">選択してください</option>
+        <option>教育支援</option>
+        <option>医療サポート</option>
+        <option>災害復旧</option>
+        <option>環境・自然保護</option>
+        <option>子ども支援</option>
+        <option>ITスキル支援</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>オンラインボランティア希望</label>
+      <select>
+        <option>オンラインも可能</option>
+        <option>現地参加希望</option>
+        <option>どちらでも可</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>自己紹介・スキル・メッセージ</label>
+      <textarea placeholder="簡単な自己紹介やお持ちのスキル、ご質問などをご記入ください。"></textarea>
+    </div>
+    <button class="form-submit" onclick="submitForm()">登録して応募する →</button>
+  </div>
+
+  <div class="form-panel" id="panel-org">
+    <div class="form-row">
+      <label>Organization Name / 団体名</label>
+      <input type="text" placeholder="例：Smile Learning Center" />
+    </div>
+    <div class="form-row">
+      <label>Country / Region</label>
+      <input type="text" placeholder="例：Philippines / Cebu" />
+    </div>
+    <div class="form-row">
+      <label>Type of Support Needed / 必要なサポートの種類</label>
+      <select>
+        <option value="">Select / 選択</option>
+        <option>教育支援 / Education</option>
+        <option>医療サポート / Medical</option>
+        <option>災害復旧 / Disaster Relief</option>
+        <option>環境 / Environment</option>
+        <option>子ども支援 / Child Support</option>
+        <option>ITスキル / IT Skills</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>必要なボランティア人数 / Number of Volunteers Needed</label>
+      <input type="number" placeholder="例：3" min="1" />
+    </div>
+    <div class="form-row">
+      <label>期間 / Duration</label>
+      <select>
+        <option>1日 / 1 Day</option>
+        <option>1週間 / 1 Week</option>
+        <option>2〜4週間 / 2–4 Weeks</option>
+        <option>1ヶ月以上 / 1 Month+</option>
+        <option>継続的 / Ongoing</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Contact Email</label>
+      <input type="email" placeholder="contact@yourorg.org" />
+    </div>
+    <div class="form-row">
+      <label>支援内容の詳細 / Description of Your Needs</label>
+      <textarea placeholder="どのような支援が必要か、現在の状況、求めるスキルなどをできるだけ詳しくご記入ください。"></textarea>
+    </div>
+    <button class="form-submit" onclick="submitForm()">リクエストを送る →</button>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="community">
+  <div class="community-inner">
+    <div class="section-eyebrow">Community</div>
+    <h2 class="section-title">経験者に直接聞ける場所</h2>
+    <p class="section-sub">Discordコミュニティでは、ボランティア経験者や現地情報に詳しい方に気軽に質問できます。</p>
+    <div class="discord-box">
+      <h3>💬 Blessed Connection Community</h3>
+      <p>海外ボランティア / 国内活動 / 寄付・支援 / 初心者質問<br>あなたの疑問に、経験者が答えます。</p>
+      <a href="https://discord.gg/" target="_blank" class="btn-discord">Discordに参加する</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Blessed Connection</strong><br>
+  誰かの人生を変える場所<br><br>
+  © 2025 Blessed Connection. All rights reserved.<br>
+  このサイトは個人が運営するボランティアマッチングプラットフォームです。<br>
+  寄付金の受け取りは行っておりません。
+</footer>
+
+<div class="toast" id="toast">送信しました！48時間以内にご連絡します ✓</div>
+
+<script>
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  }
+
+  // Tab switch
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+  }
+
+  // Filter cards
+  function filterCards(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.card').forEach(card => {
+      if (cat === 'all') {
+        card.style.display = '';
+      } else if (cat === 'online') {
+        card.style.display = card.dataset.online === 'true' ? '' : 'none';
+      } else {
+        card.style.display = card.dataset.cat.includes(cat) ? '' : 'none';
+      }
+    });
+  }
+
+  // Toast on form submit
+  function submitForm() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  // Smooth scroll offset for fixed nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({ top: target.offsetTop - 72, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
