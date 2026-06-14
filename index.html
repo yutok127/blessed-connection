@@ -21,258 +21,162 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Noto Sans JP', sans-serif;
-      background: var(--cream);
-      color: var(--ink);
+      background: var(--forest);
+      color: var(--white);
       line-height: 1.7;
+      min-height: 100vh;
     }
 
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 40px;
-      background: rgba(15,26,20,0.96);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px 40px;
+      background: rgba(15,26,20,0.7);
       backdrop-filter: blur(12px);
     }
     .nav-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.2rem; font-weight: 700;
-      color: var(--leaf); letter-spacing: 0.02em;
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--leaf); letter-spacing: 0.04em;
     }
-    .nav-link {
-      color: rgba(255,255,255,0.55);
-      text-decoration: none; font-size: 0.82rem;
-      font-weight: 500; transition: color 0.2s;
-    }
-    .nav-link:hover { color: var(--leaf); }
 
-    /* HERO */
-    #hero {
+    /* MAIN */
+    main {
       min-height: 100vh;
-      background: var(--forest);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center;
-      padding: 120px 24px 100px;
+      padding: 100px 24px 80px;
       position: relative; overflow: hidden;
     }
-    .hero-glow {
+    .bg-glow {
       position: absolute; inset: 0; pointer-events: none;
       background:
-        radial-gradient(ellipse 60% 50% at 50% 40%, rgba(82,183,136,0.10) 0%, transparent 70%),
-        radial-gradient(ellipse 30% 30% at 20% 85%, rgba(82,183,136,0.05) 0%, transparent 60%),
-        radial-gradient(ellipse 30% 30% at 80% 85%, rgba(82,183,136,0.05) 0%, transparent 60%);
+        radial-gradient(ellipse 65% 55% at 50% 45%, rgba(82,183,136,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 35% at 15% 85%, rgba(82,183,136,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 35% at 85% 85%, rgba(82,183,136,0.05) 0%, transparent 60%);
     }
+
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.6rem, 7vw, 5.2rem);
+      font-size: clamp(2.5rem, 7vw, 5rem);
       font-weight: 900; line-height: 1.1;
-      color: var(--white); margin-bottom: 28px;
+      color: var(--white); margin-bottom: 24px;
       position: relative;
     }
     .hero-title em { font-style: normal; color: var(--leaf); }
-    .hero-message {
-      font-size: clamp(0.92rem, 2vw, 1.08rem);
-      color: rgba(255,255,255,0.52);
-      max-width: 500px; line-height: 2;
-      font-weight: 300; margin-bottom: 52px;
+
+    .hero-sub {
+      font-size: clamp(0.88rem, 2vw, 1rem);
+      color: rgba(255,255,255,0.45);
+      max-width: 420px; line-height: 2;
+      font-weight: 300; margin-bottom: 56px;
       position: relative;
     }
-    .hero-cta {
-      display: flex; gap: 16px; flex-wrap: wrap;
-      justify-content: center; position: relative;
+
+    /* BUTTONS */
+    .cta-wrap {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 16px;
+      position: relative; width: 100%; max-width: 340px;
     }
-    .btn {
-      padding: 17px 38px; border-radius: 4px;
-      font-size: 0.93rem; font-weight: 700;
-      text-decoration: none; cursor: pointer;
-      border: none; transition: all 0.22s;
-      display: inline-block; font-family: 'Noto Sans JP', sans-serif;
+    .cta-btn {
+      display: block; width: 100%;
+      padding: 20px 32px; border-radius: 6px;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none; text-align: center;
+      font-family: 'Noto Sans JP', sans-serif;
+      letter-spacing: 0.02em;
+      transition: all 0.22s;
+      border: none; cursor: pointer;
     }
-    .btn-primary { background: var(--leaf); color: var(--ink); }
-    .btn-primary:hover { background: #6fcfa0; transform: translateY(-2px); }
-    .btn-secondary {
+    .cta-want {
+      background: var(--leaf); color: var(--ink);
+    }
+    .cta-want:hover {
+      background: #6fcfa0; transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(82,183,136,0.25);
+    }
+    .cta-need {
       background: none;
-      border: 1.5px solid rgba(255,255,255,0.28);
+      border: 1.5px solid rgba(255,255,255,0.25);
       color: var(--white);
     }
-    .btn-secondary:hover { border-color: var(--leaf); color: var(--leaf); transform: translateY(-2px); }
-    .hero-wave {
-      position: absolute; bottom: -1px; left: 0; right: 0;
-      height: 56px; background: var(--cream);
-      clip-path: ellipse(55% 100% at 50% 100%);
+    .cta-need:hover {
+      border-color: var(--leaf); color: var(--leaf);
+      transform: translateY(-2px);
+    }
+    .cta-or {
+      font-size: 0.72rem; color: rgba(255,255,255,0.2);
+      letter-spacing: 0.1em; text-transform: uppercase;
     }
 
-    /* PHILOSOPHY */
-    #philosophy {
-      padding: 88px 24px;
-      text-align: center; background: var(--cream);
-    }
-    .philosophy-inner { max-width: 580px; margin: 0 auto; }
-    .divider-line {
-      width: 28px; height: 2px;
-      background: var(--leaf); margin: 0 auto 32px;
-    }
-    .philosophy-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.35rem, 3.5vw, 2rem);
-      font-weight: 700; line-height: 1.6;
-      color: var(--ink); margin-bottom: 20px;
-    }
-    .philosophy-body {
-      font-size: 0.9rem; color: var(--sub);
-      line-height: 2; font-weight: 300;
+    /* DIVIDER */
+    .section-divider {
+      width: 100%; height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 72px 0 0; position: relative;
     }
 
-    /* FORMS */
-    #forms {
-      background: var(--pale);
-      padding: 80px 24px 96px;
-    }
-    .forms-label {
-      text-align: center;
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--moss); margin-bottom: 40px;
-    }
-    .forms-wrap {
-      max-width: 860px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
-    }
-    .form-card {
-      background: var(--white); border-radius: 10px;
-      border: 1px solid rgba(0,0,0,0.06);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      overflow: hidden;
-    }
-    .form-card-top {
-      padding: 28px 28px 22px;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-    .form-card-icon { font-size: 1.7rem; margin-bottom: 10px; }
-    .form-card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem; font-weight: 700;
-      color: var(--ink); margin-bottom: 7px;
-    }
-    .form-card-desc {
-      font-size: 0.8rem; color: var(--sub);
-      line-height: 1.8; font-weight: 300;
-    }
-    .form-body { padding: 24px 28px; }
-    .row { margin-bottom: 14px; }
-    .row label {
-      display: block; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.05em; color: var(--ink);
-      margin-bottom: 5px; text-transform: uppercase;
-    }
-    .row input,
-    .row select,
-    .row textarea {
-      width: 100%; padding: 10px 13px;
-      border: 1.5px solid rgba(0,0,0,0.1);
-      border-radius: 4px; font-size: 0.86rem;
-      font-family: 'Noto Sans JP', sans-serif;
-      background: var(--cream); color: var(--ink);
-      transition: border-color 0.2s; outline: none;
-      appearance: none; -webkit-appearance: none;
-    }
-    .row input:focus,
-    .row select:focus,
-    .row textarea:focus { border-color: var(--leaf); background: var(--white); }
-    .row textarea { resize: vertical; min-height: 100px; line-height: 1.7; }
-    .form-submit {
-      width: 100%; padding: 13px;
-      border: none; border-radius: 4px;
-      font-size: 0.88rem; font-weight: 700;
-      cursor: pointer; transition: all 0.2s;
-      font-family: 'Noto Sans JP', sans-serif;
-      margin-top: 6px; letter-spacing: 0.02em;
-    }
-    .submit-green { background: var(--forest); color: var(--white); }
-    .submit-green:hover { background: var(--moss); }
-    .submit-light { background: var(--leaf); color: var(--ink); }
-    .submit-light:hover { background: #6fcfa0; }
-
-    /* PHILIPPINES OPTIONAL */
+    /* PHILIPPINES */
     #ph-option {
-      background: var(--forest);
-      padding: 72px 24px;
+      background: rgba(0,0,0,0.2);
+      padding: 64px 24px;
       text-align: center;
     }
-    .ph-inner { max-width: 580px; margin: 0 auto; }
-    .ph-flag { font-size: 2rem; margin-bottom: 16px; }
+    .ph-inner { max-width: 500px; margin: 0 auto; }
+    .ph-flag { font-size: 1.8rem; margin-bottom: 14px; }
     .ph-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      font-size: clamp(1.1rem, 3vw, 1.55rem);
       font-weight: 700; color: var(--white);
-      margin-bottom: 14px; line-height: 1.5;
+      margin-bottom: 14px; line-height: 1.55;
     }
     .ph-title em { font-style: normal; color: var(--leaf); }
     .ph-desc {
-      font-size: 0.86rem; color: rgba(255,255,255,0.5);
-      line-height: 2; font-weight: 300; margin-bottom: 28px;
+      font-size: 0.83rem; color: rgba(255,255,255,0.42);
+      line-height: 2; font-weight: 300; margin-bottom: 24px;
     }
     .ph-note {
-      display: inline-block;
-      background: rgba(82,183,136,0.1);
-      border: 1px solid rgba(82,183,136,0.25);
-      border-radius: 6px; padding: 14px 20px;
-      font-size: 0.82rem; color: rgba(255,255,255,0.6);
-      line-height: 1.85; margin-bottom: 28px;
-      text-align: left;
+      background: rgba(82,183,136,0.08);
+      border: 1px solid rgba(82,183,136,0.2);
+      border-radius: 6px; padding: 14px 18px;
+      font-size: 0.8rem; color: rgba(255,255,255,0.5);
+      line-height: 1.85; margin-bottom: 26px; text-align: left;
     }
-    .ph-note strong { color: var(--leaf); font-weight: 600; }
+    .ph-note strong { color: var(--leaf); }
     .btn-ph {
       display: inline-block;
-      padding: 14px 32px; border-radius: 4px;
-      border: 1.5px solid rgba(82,183,136,0.5);
-      color: var(--leaf); font-size: 0.88rem;
+      padding: 13px 28px; border-radius: 4px;
+      border: 1.5px solid rgba(82,183,136,0.4);
+      color: var(--leaf); font-size: 0.85rem;
       font-weight: 700; text-decoration: none;
       font-family: 'Noto Sans JP', sans-serif;
-      transition: all 0.2s; cursor: pointer; background: none;
+      transition: all 0.2s;
     }
     .btn-ph:hover { background: var(--leaf); color: var(--ink); }
 
     /* FOOTER */
     footer {
-      background: var(--ink);
-      padding: 44px 24px;
+      background: rgba(0,0,0,0.3);
+      padding: 36px 24px;
       text-align: center;
     }
     .footer-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.15rem; color: var(--leaf);
-      font-weight: 700; margin-bottom: 10px;
+      font-size: 1.05rem; color: var(--leaf);
+      font-weight: 700; margin-bottom: 8px;
     }
     .footer-text {
-      font-size: 0.78rem; color: rgba(255,255,255,0.3);
+      font-size: 0.75rem; color: rgba(255,255,255,0.22);
       line-height: 1.9; font-weight: 300;
     }
 
-    /* TOAST */
-    .toast {
-      position: fixed; bottom: 28px; left: 50%;
-      transform: translateX(-50%);
-      background: var(--forest); color: var(--white);
-      padding: 13px 26px; border-radius: 4px;
-      font-size: 0.84rem; font-weight: 500;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s; z-index: 999;
-      white-space: nowrap;
-      font-family: 'Noto Sans JP', sans-serif;
-    }
-    .toast.show { opacity: 1; }
-
-    /* RESPONSIVE */
-    @media (max-width: 640px) {
-      nav { padding: 15px 20px; }
-      #hero { padding: 100px 20px 90px; }
-      .forms-wrap { grid-template-columns: 1fr; gap: 20px; }
-      .form-card-top, .form-body { padding: 22px 18px; }
-      #philosophy, #forms, #ph-option { padding: 64px 20px; }
-      footer { padding: 40px 20px; }
+    @media (max-width: 480px) {
+      nav { padding: 16px 20px; }
+      main { padding: 90px 20px 60px; }
+      #ph-option { padding: 52px 20px; }
     }
   </style>
 </head>
@@ -281,137 +185,33 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Blessed Connection</div>
-  <a href="#forms" class="nav-link">参加する</a>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-glow"></div>
+<!-- MAIN -->
+<main>
+  <div class="bg-glow"></div>
+
   <h1 class="hero-title">
     「助けたい」と<br><em>「助けてほしい」</em>が<br>出会う場所。
   </h1>
-  <p class="hero-message">
+
+  <p class="hero-sub">
     ここはエージェントでも仲介業者でもありません。<br>
     ただ、あなたの声が、誰かに届く場所です。
   </p>
-  <div class="hero-cta">
-    <a href="#forms" class="btn btn-primary">助けたい</a>
-    <a href="#forms" class="btn btn-secondary">助けてほしい</a>
+
+  <div class="cta-wrap">
+    <a href="https://tally.so/r/XxNRWj" target="_blank" class="cta-btn cta-want">
+      🌿　助けたい
+    </a>
+    <div class="cta-or">or</div>
+    <a href="https://tally.so/r/jaE04x" target="_blank" class="cta-btn cta-need">
+      🤝　助けてほしい
+    </a>
   </div>
-  <div class="hero-wave"></div>
-</section>
 
-<!-- PHILOSOPHY -->
-<section id="philosophy">
-  <div class="philosophy-inner">
-    <div class="divider-line"></div>
-    <p class="philosophy-title">
-      実績はまだありません。<br>
-      でも、始めなければ<br>
-      何も生まれない。
-    </p>
-    <p class="philosophy-body">
-      このサイトは、日本国内で「何かしたい」という気持ちと<br>
-      「助けてほしい」という声をつなぐための小さな入口です。<br><br>
-      お金は関係ない。資格も関係ない。<br>
-      「何かしたい」という気持ちだけで十分です。
-    </p>
-  </div>
-</section>
-
-<!-- FORMS -->
-<section id="forms">
-  <div class="forms-label">まず、声を聞かせてください</div>
-  <div class="forms-wrap">
-
-    <!-- 助けたい -->
-    <div class="form-card">
-      <div class="form-card-top">
-        <div class="form-card-icon">🌿</div>
-        <div class="form-card-title">助けたい方へ</div>
-        <div class="form-card-desc">
-          ボランティアに興味がある方、何かしたいけど<br>
-          何をすればいいかわからない方、<br>
-          まず声を聞かせてください。
-        </div>
-      </div>
-      <div class="form-body">
-        <div class="row">
-          <label>お名前</label>
-          <input type="text" placeholder="例：田中 さくら" />
-        </div>
-        <div class="row">
-          <label>メールアドレス</label>
-          <input type="email" placeholder="example@email.com" />
-        </div>
-        <div class="row">
-          <label>今いる場所</label>
-          <select>
-            <option value="">選択してください</option>
-            <option>東京</option>
-            <option>大阪</option>
-            <option>その他（日本国内）</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>できること・やりたいこと（自由に）</label>
-          <textarea placeholder="例：子どもと関わることが好きです。週末だけ参加したいです。語学が少し得意です。など、なんでも。"></textarea>
-        </div>
-        <a href="https://tally.so/r/XxNRWj"
-target="_blank"
-class="form-submit submit-green"
-style="display:block;text-align:center;
-text-decoration:none;">
-送る →
-</a>
-      </div>
-    </div>
-
-    <!-- 助けてほしい -->
-    <div class="form-card">
-      <div class="form-card-top">
-        <div class="form-card-icon">🤝</div>
-        <div class="form-card-title">助けてほしい方へ</div>
-        <div class="form-card-desc">
-          団体でも個人でも構いません。<br>
-          どんな小さなことでも、<br>
-          声を上げてください。
-        </div>
-      </div>
-      <div class="form-body">
-        <div class="row">
-          <label>名前・団体名</label>
-          <input type="text" placeholder="例：NPO法人 〇〇 / 個人でも可" />
-        </div>
-        <div class="row">
-          <label>メールアドレス</label>
-          <input type="email" placeholder="example@email.com" />
-        </div>
-        <div class="row">
-          <label>場所</label>
-          <select>
-            <option value="">選択してください</option>
-            <option>東京</option>
-            <option>大阪</option>
-            <option>その他（日本国内）</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>何が必要ですか？（自由に）</label>
-          <textarea placeholder="例：週1回、子どもたちの話し相手になってくれる人がいたら助かります。人数や時間は相談できます。など、なんでも。"></textarea>
-        </div>
-        <a href="https://tally.so/r/jaE04x"
-target="_blank"
-class="form-submit submit-green"
-style="display:block;text-align:center;
-text-decoration:none;">
-送る →
-</a>
-      </div>
-    </div>
-
-  </div>
-</section>
+  <div class="section-divider"></div>
+</main>
 
 <!-- PHILIPPINES OPTIONAL -->
 <section id="ph-option">
@@ -432,8 +232,7 @@ text-decoration:none;">
       運営者が個人的に橋渡しをする形になります。<br>
       まずは気軽にご連絡ください。
     </div>
-    <br>
-    <a href="mailto:k.yuto120788@gmail.com" class="btn-ph">フィリピンについて問い合わせる</a>
+    <a href="mailto:your@email.com" class="btn-ph">フィリピンについて問い合わせる</a>
   </div>
 </section>
 
@@ -446,29 +245,6 @@ text-decoration:none;">
     © 2025 Blessed Connection
   </div>
 </footer>
-
-<div class="toast" id="toast"></div>
-
-<script>
-  function submitForm(type) {
-    const toast = document.getElementById('toast');
-    toast.textContent = type === 'want'
-      ? '送信しました。近いうちにご連絡します ✓'
-      : '送信しました。あなたの声、受け取りました ✓';
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4000);
-  }
-
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) {
-        e.preventDefault();
-        window.scrollTo({ top: t.offsetTop - 68, behavior: 'smooth' });
-      }
-    });
-  });
-</script>
 
 </body>
 </html>
